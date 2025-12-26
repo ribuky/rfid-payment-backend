@@ -1,0 +1,71 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+<div class="p-6">
+
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold">Daftar Biaya Admin</h1>
+
+        <a href="{{ url_for('biaya_admin.biaya_admin_add') }}"
+           class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            + Tambah Biaya
+        </a>
+    </div>
+
+    <div class="bg-white shadow rounded overflow-hidden">
+        <table class="min-w-full text-sm">
+            <thead class="bg-gray-100 border-b">
+                <tr>
+                    <th class="py-3 px-4 text-left">Agen</th>
+                    <th class="py-3 px-4 text-left">Biaya Topup</th>
+                    <th class="py-3 px-4 text-left">Biaya Transaksi</th>
+                    <th class="py-3 px-4 text-center">Aksi</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for row in data %}
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="py-3 px-4">
+                        {{ row.agen.nama_user }}<br>
+                        <span class="text-xs text-gray-500">{{ row.agen.nik_user }}</span>
+                    </td>
+
+                    <td class="py-3 px-4">
+                        Rp {{ "{:,.2f}".format(row.biaya_topup) }}
+                    </td>
+
+                    <td class="py-3 px-4">
+                        Rp {{ "{:,.2f}".format(row.biaya_transaksi) }}
+                    </td>
+
+                    <td class="py-3 px-4 text-center">
+                        <a href="{{ url_for('biaya_admin.biaya_admin_edit', id=row.id) }}"
+                           class="text-blue-600 hover:underline mr-3">
+                            Edit
+                        </a>
+
+                        <a href="{{ url_for('biaya_admin.biaya_admin_delete', id=row.id) }}"
+                           onclick="return confirm('Hapus data ini?')"
+                           class="text-red-600 hover:underline">
+                            Hapus
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                {% if data|length == 0 %}
+                <tr>
+                    <td colspan="4" class="py-4 text-center text-gray-500">
+                        Belum ada data biaya admin.
+                    </td>
+                </tr>
+                {% endif %}
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

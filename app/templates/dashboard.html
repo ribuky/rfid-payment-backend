@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      #uid-box {
+        font-size: 32px;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        background: #e2e8f0;
+        transition: transform 0.3s ease, background 0.3s ease;
+      }
+      #uid-box.ping {
+        transform: scale(1.05);
+        background: #c7f9cc;
+      }
+    </style>
+  </head>
+  <
+  <body class="p-5 bg-gray-100">
+    <h3 class="text-xl mb-4">Halo, {{ nama_user }} ({{ role }})</h3>
+
+    <div class="border-2 border-gray-700 w-52 p-3 mb-4 text-center bg-white">
+      <b>Tapping Kartu</b>
+    </div>
+
+    {% if role == 'admin' %}
+    <a
+      href="{{ url_for('user.users') }}"
+      class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+      >Data Users</a
+    >
+
+    <a
+      href="{{ url_for('biaya_admin.biaya_admin_list') }}"
+      class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 ml-2"
+      >Biaya Admin</a
+    >
+    {% endif %}
+
+    <a
+      href="{{ url_for('pelanggan.pelanggan_list') }}"
+      class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 ml-2"
+      >Data Pelanggan</a
+    >
+
+
+    <a
+      href="{{ url_for('auth.logout') }}"
+      class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 ml-2"
+      >Logout</a
+    >
+
+    <hr class="my-4 border-gray-400" />
+
+    <div id="uid-box" hidden></div>
+
+    {% block content %}{% endblock %}
+
+    <script>
+      let lastUID = null;
+      let controller = null;
+
+      async function pollUID() {
+        if (controller) controller.abort();
+        controller = new AbortController();
+
+        try {
+          const res = await fetch("/api/last_uid", {
+            signal: controller.signal,
+            cache: "no-store",
+          });
+
+          const data = await res.json();
+
+          if (data.uid && data.uid !== lastUID) {
+            lastUID = data.uid;
+            await handleTap(data.uid);
+          }
+        } catch (err) {}
+
+        setTimeout(pollUID, 1000);
+      }
+
+      async function handleTap(uid) {
+        // Hentikan UID lama agar tidak redirect ulang
+        await fetch("/api/clear_uid");
+
+        // Redirect ke halaman tapping detail
+        window.location.href = "/tapping/" + uid;
+      }
+
+      document.addEventListener("DOMContentLoaded", pollUID);
+    </script>
+  </body>
+</html>

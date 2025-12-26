@@ -1,0 +1,88 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<h2 class="text-xl font-bold mb-4">Tambah Pelanggan</h2>
+
+<form method="POST" id="form-pelanggan">
+
+  <label class="block mb-1 font-semibold">UID RFID</label>
+  <input type="text" id="uid_rfid" name="uid_rfid" 
+         placeholder="Tap kartu RFID..."
+         class="border p-2 w-full mb-3 bg-gray-100" readonly>
+
+  <p id="status" class="text-sm text-gray-500 mb-4">
+      Menunggu tap kartu RFID...
+  </p>
+
+  <input type="text" name="nik_pelanggan" placeholder="NIK Pelanggan" required class="border p-2 w-full mb-2">
+  <input type="text" name="nama_pelanggan" placeholder="Nama Pelanggan" required class="border p-2 w-full mb-2">
+  <input type="text" name="kelas" placeholder="Kelas" class="border p-2 w-full mb-2">
+  <input type="text" name="no_hp" placeholder="Nomor HP" class="border p-2 w-full mb-2">
+
+  <button type="submit" class="bg-green-500 text-white px-3 py-2 rounded">
+      Simpan
+  </button>
+</form>
+
+<script>
+let lastUID = "";
+
+async function pollUID() {
+    try {
+        const res = await fetch("/api/last_uid", { cache: "no-store" });
+        const data = await res.json();
+
+        const uidInput = document.getElementById("uid_rfid");
+        const status = document.getElementById("status");
+
+        if (data.uid && data.uid !== lastUID) {
+            lastUID = data.uid;
+            uidInput.value = data.uid;
+
+            status.textContent = "Kartu terdeteksi!";
+            status.classList.remove("text-gray-500");
+            status.classList.add("text-green-600");
+
+            // Clear UID supaya tidak override data saat user mengetik field lain
+            await fetch("/api/clear_uid");
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
+    setTimeout(pollUID, 1000);
+}
+
+document.addEventListener("DOMContentLoaded", pollUID);
+</script>
+
+
+<!-- <script>
+let lastUID = "";
+
+async function pollUID() {
+    try {
+        const res = await fetch("/api/last_uid", { cache: "no-store" });
+        const data = await res.json();
+
+        const uidInput = document.getElementById("uid_rfid");
+        const status = document.getElementById("status");
+
+        if (data.uid && data.uid !== lastUID) {
+            lastUID = data.uid;
+            uidInput.value = data.uid;
+
+            status.textContent = "Kartu terdeteksi!";
+            status.classList.remove("text-gray-500");
+            status.classList.add("text-green-600");
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
+    setTimeout(pollUID, 1000);
+}
+
+document.addEventListener("DOMContentLoaded", pollUID);
+</script> -->
+
+{% endblock %}

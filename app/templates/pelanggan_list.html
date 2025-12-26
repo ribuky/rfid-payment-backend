@@ -1,0 +1,46 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<h2 class="text-xl font-bold mb-4">Data Pelanggan</h2>
+
+<div class="flex justify-between mb-4">
+  <a href="{{ url_for('pelanggan.pelanggan_add') }}" class="bg-blue-500 text-white px-3 py-2 rounded">Tambah Pelanggan</a>
+
+  <form method="GET" action="{{ url_for('pelanggan.pelanggan_list') }}" class="flex gap-2">
+    <input type="text" name="q" value="{{ q or '' }}" placeholder="Cari nama / NIK..."
+           class="border p-2 rounded w-64">
+    <button type="submit" class="bg-gray-700 text-white px-3 py-2 rounded">Cari</button>
+    {% if q %}
+      <a href="{{ url_for('pelanggan.pelanggan_list') }}" class="bg-red-500 text-white px-3 py-2 rounded">Reset</a>
+    {% endif %}
+  </form>
+</div>
+
+<table class="mt-4 w-full border">
+  <thead>
+    <tr class="bg-gray-200">
+      <th>ID</th><th>UID RFID</th><th>NIK</th><th>Nama</th><th>Kelas</th><th>No HP</th><th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in pelanggan %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.uid_rfid }}</td>
+        <td>{{ p.nik_pelanggan }}</td>
+        <td>{{ p.nama_pelanggan }}</td>
+        <td>{{ p.kelas }}</td>
+        <td>{{ p.no_hp }}</td>
+        <td>
+          <a href="{{ url_for('pelanggan.pelanggan_edit', id=p.id) }}" class="text-blue-600">Edit</a> |
+          <a href="{{ url_for('pelanggan.pelanggan_delete', id=p.id) }}" class="text-red-600" onclick="return confirm('Hapus pelanggan ini?')">Hapus</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="6" class="text-center py-4 text-gray-500">Tidak ada data ditemukan.</td>
+      </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+{% endblock %}

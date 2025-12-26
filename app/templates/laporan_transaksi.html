@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pembayaran</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h2 class="text-xl font-semibold mb-2">
+        Laporan Transaksi Bulan {{ month }} Tahun {{ year }}
+    </h2>
+
+    <p>Total Topup: <strong>Rp {{ "{:,.2f}".format(total_topup) }}</strong></p>
+    <p>Total Pembelian: <strong>Rp {{ "{:,.2f}".format(total_pembelian) }}</strong></p>
+
+    <form class="mt-4">
+        <label>Pilih Periode: </label>
+        <select name="month" onchange="this.form.submit()">
+            {% for m in range(1, 13) %}
+            <option value="{{ m }}" {% if month == m %}selected{% endif %}>{{ m }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="year" onchange="this.form.submit()">
+            {% for y in range(2023, 2031) %}
+            <option value="{{ y }}" {% if year == y %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+    </form>
+  </body>
+</html>

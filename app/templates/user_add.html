@@ -1,0 +1,16 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<h2 class="text-xl font-bold mb-4">Tambah User</h2>
+
+<form method="POST">
+  <input type="text" name="nik_user" placeholder="NIK" required class="border p-2 w-full mb-2">
+  <input type="text" name="nama_user" placeholder="Nama" required class="border p-2 w-full mb-2">
+  <input type="text" name="username" placeholder="Username" required class="border p-2 w-full mb-2">
+  <input type="password" name="password" placeholder="Password" required class="border p-2 w-full mb-2">
+  <select name="role" class="border p-2 w-full mb-2">
+    <option value="admin">Admin</option>
+    <option value="agen">Agen</option>
+  </select>
+  <button type="submit" class="bg-green-500 text-white px-3 py-2 rounded">Simpan</button>
+</form>
+{% endblock %}

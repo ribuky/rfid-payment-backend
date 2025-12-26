@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Riwayat Transaksi</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h2 class="text-xl font-semibold mb-4">Riwayat Transaksi</h2>
+
+    <div class="flex gap-2 mb-4">
+      <a href="?filter=all" class="px-3 py-1 bg-gray-300 rounded">Semua</a>
+      <a href="?filter=today" class="px-3 py-1 bg-gray-300 rounded">Hari Ini</a>
+      <a href="?filter=week" class="px-3 py-1 bg-gray-300 rounded"
+        >Minggu Ini</a
+      >
+      <a href="?filter=month" class="px-3 py-1 bg-gray-300 rounded"
+        >Bulan Ini</a
+      >
+    </div>
+
+    <table class="min-w-full border text-sm">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="px-4 py-2">Waktu</th>
+          <th class="px-4 py-2">Masuk</th>
+          <th class="px-4 py-2">Keluar</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for t in riwayat %}
+        <tr class="border-t">
+          <td class="px-4 py-2">{{ t.waktu_transaksi }}</td>
+          <td class="px-4 py-2 text-green-600">{{ t.transaksi_masuk }}</td>
+          <td class="px-4 py-2 text-red-600">{{ t.transaksi_keluar }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

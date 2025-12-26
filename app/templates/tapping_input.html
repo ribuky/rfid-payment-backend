@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tapping Kartu</title>
+</head>
+<body>
+  <h2>Simulasi Tapping Kartu</h2>
+  <form action="{{ url_for('tapping.tapping_page') }}" method="POST">
+    <input type="text" name="uid" placeholder="Masukkan UID RFID" required>
+    <button type="submit">Tapping</button>
+  </form>
+  <a href="{{ url_for('auth.logout') }}">Logout</a>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<h2 class="text-xl font-bold mb-4">Data Users</h2>
+
+<a href="{{ url_for('user.add_user') }}" class="bg-blue-500 text-white px-3 py-2 rounded">Tambah User</a>
+
+<table class="mt-4 w-full border">
+  <thead>
+    <tr class="bg-gray-200">
+      <th>ID</th><th>NIK</th><th>Nama</th><th>Username</th><th>Role</th><th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for u in users %}
+    <tr>
+      <td>{{ u[0] }}</td>
+      <td>{{ u[1] }}</td>
+      <td>{{ u[2] }}</td>
+      <td>{{ u[3] }}</td>
+      <td>{{ u[5] }}</td>
+      <td>
+        <a href="{{ url_for('user.edit_user', id=u[0]) }}" class="text-blue-600">Edit</a> |
+        <a href="{{ url_for('user.delete_user_route', id=u[0]) }}" class="text-red-600" onclick="return confirm('Hapus user ini?')">Hapus</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

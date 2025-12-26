@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Data Kartu</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="bg-white p-6 rounded shadow mb-6">
+      <h2 class="text-xl font-semibold mb-4">Informasi Pelanggan</h2>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <p class="text-gray-600 text-sm">Nama Pelanggan</p>
+          <p class="text-lg font-medium">{{ pelanggan.nama_pelanggan }}</p>
+        </div>
+
+        <div>
+          <p class="text-gray-600 text-sm">NIK</p>
+          <p class="text-lg font-medium">{{ pelanggan.nik_pelanggan }}</p>
+        </div>
+
+        <div>
+          <p class="text-gray-600 text-sm">Kelas</p>
+          <p class="text-lg font-medium">{{ pelanggan.kelas }}</p>
+        </div>
+
+        <div>
+          <p class="text-gray-600 text-sm">Nomor HP</p>
+          <p class="text-lg font-medium">{{ pelanggan.no_hp }}</p>
+        </div>
+
+        <div class="col-span-2">
+          <p class="text-gray-600 text-sm">Saldo</p>
+          <p class="text-3xl font-bold text-green-600">
+            Rp {{ "{:,.2f}".format(saldo) }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="flex gap-4">
+      <a
+        href="{{ url_for('transaksi.topup_add', id_pelanggan=pelanggan.id) }}"
+        class="px-4 py-2 bg-blue-600 text-white rounded"
+      >
+        Topup
+      </a>
+
+      <a
+        href="{{ url_for('transaksi.transaksi', uid=pelanggan.uid_rfid) }}"
+        class="px-4 py-2 bg-yellow-600 text-white rounded"
+      >
+        Transaksi Pembelian
+      </a>
+
+      <a
+        href="{{ url_for('transaksi.transaksi_riwayat', id_pelanggan=pelanggan.id) }}"
+        class="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800"
+      >
+        Riwayat Transaksi
+      </a>
+      <a
+        href="{{ url_for('transaksi.transaksi_cetak', id_pelanggan=pelanggan.id) }}"
+        class="px-4 py-2 bg-gray-700 text-white rounded"
+      >
+        Cetak Transaksi
+      </a>
+    </div>
+
+    <br /><br />
+    <a href="{{ url_for('auth.logout') }}">Logout</a>
+  </body>
+</html>

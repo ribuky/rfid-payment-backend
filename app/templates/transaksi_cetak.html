@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cetak Transaksi</title>
+    <style>
+      body {
+        font-family: Arial;
+        font-size: 13px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        border: 1px solid #000;
+        padding: 6px;
+      }
+      th {
+        background: #eee;
+      }
+      .header {
+        margin-bottom: 20px;
+      }
+      .right {
+        text-align: right;
+      }
+      @media print {
+        button {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <h2>Riwayat Transaksi Pelanggan</h2>
+      <p>Nama: <strong>{{ pelanggan.nama_pelanggan }}</strong></p>
+      <p>NIK: {{ pelanggan.nik_pelanggan }}</p>
+      <p>Saldo Saat Ini: <strong>Rp {{ "{:,.2f}".format(saldo) }}</strong></p>
+    </div>
+    <div class="flex gap-2 mb-4">
+      <a href="?filter=all" class="px-3 py-1 bg-gray-300 rounded">Semua</a>
+      <a href="?filter=today" class="px-3 py-1 bg-gray-300 rounded">Hari Ini</a>
+      <a href="?filter=week" class="px-3 py-1 bg-gray-300 rounded"
+        >Minggu Ini</a
+      >
+      <a href="?filter=month" class="px-3 py-1 bg-gray-300 rounded"
+        >Bulan Ini</a
+      >
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Waktu</th>
+          <th>Masuk</th>
+          <th>Keluar</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for t in riwayat %}
+        <tr>
+          <td>{{ t.waktu_transaksi }}</td>
+          <td class="right">{{ "{:,.2f}".format(t.transaksi_masuk) }}</td>
+          <td class="right">{{ "{:,.2f}".format(t.transaksi_keluar) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <button onclick="window.print()" style="margin-top: 20px">Print</button>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<h2 class="text-xl font-bold mb-4">Edit User</h2>
+
+<form method="POST">
+  <input type="text" name="nik_user" value="{{ user[1] }}" required class="border p-2 w-full mb-2">
+  <input type="text" name="nama_user" value="{{ user[2] }}" required class="border p-2 w-full mb-2">
+  <input type="text" name="username" value="{{ user[3] }}" required class="border p-2 w-full mb-2">
+  <select name="role" class="border p-2 w-full mb-2">
+    <option value="admin" {% if user[5] == 'admin' %}selected{% endif %}>Admin</option>
+    <option value="agen" {% if user[5] == 'agen' %}selected{% endif %}>Agen</option>
+  </select>
+  <button type="submit" class="bg-yellow-500 text-white px-3 py-2 rounded">Update</button>
+</form>
+{% endblock %}

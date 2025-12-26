@@ -1,0 +1,50 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+<div class="p-6 max-w-xl mx-auto">
+
+    <h1 class="text-2xl font-semibold mb-6">Edit Biaya Admin</h1>
+
+    <form action="" method="POST" class="bg-white shadow rounded p-6">
+
+        <label class="block mb-4">
+            <span class="text-gray-700">Pilih Agen</span>
+            <select name="id_agen" class="mt-1 block w-full px-3 py-2 border rounded">
+                {% for agen in agen_list %}
+                <option value="{{ agen.id }}" {{ 'selected' if agen.id == biaya.id_agen else '' }}>
+                    {{ agen.nama_user }} ({{ agen.nik_user }})
+                </option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label class="block mb-4">
+            <span class="text-gray-700">Biaya Topup (Rp)</span>
+            <input type="number" step="0.01" name="biaya_topup"
+                   value="{{ biaya.biaya_topup }}"
+                   class="mt-1 block w-full px-3 py-2 border rounded">
+        </label>
+
+        <label class="block mb-6">
+            <span class="text-gray-700">Biaya Transaksi (Rp)</span>
+            <input type="number" step="0.01" name="biaya_transaksi"
+                   value="{{ biaya.biaya_transaksi }}"
+                   class="mt-1 block w-full px-3 py-2 border rounded">
+        </label>
+
+        <div class="flex justify-end">
+            <a href="{{ url_for('biaya_admin.biaya_admin_list') }}"
+               class="px-4 py-2 bg-gray-300 rounded mr-2">
+                Batal
+            </a>
+
+            <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                Update
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

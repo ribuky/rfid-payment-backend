@@ -1,0 +1,23 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<h2 class="text-xl font-bold mb-4">Edit Pelanggan</h2>
+
+<form method="POST" class="max-w-lg">
+  <label class="block mb-2 font-semibold">UID RFID</label>
+  <input type="text" value="{{ pelanggan.uid_rfid }}" disabled class="border p-2 w-full mb-3 bg-gray-200">
+
+  <label class="block mb-2 font-semibold">NIK Pelanggan</label>
+  <input type="text" name="nik_pelanggan" value="{{ pelanggan.nik_pelanggan or '' }}" required class="border p-2 w-full mb-3">
+
+  <label class="block mb-2 font-semibold">Nama Pelanggan</label>
+  <input type="text" name="nama_pelanggan" value="{{ pelanggan.nama_pelanggan }}" required class="border p-2 w-full mb-3">
+
+  <label class="block mb-2 font-semibold">Kelas</label>
+  <input type="text" name="kelas" value="{{ pelanggan.kelas or '' }}" class="border p-2 w-full mb-3">
+
+  <label class="block mb-2 font-semibold">No. HP</label>
+  <input type="text" name="no_hp" value="{{ pelanggan.no_hp or '' }}" class="border p-2 w-full mb-3">
+
+  <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Update</button>
+</form>
+{% endblock %}
